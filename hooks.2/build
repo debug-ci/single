@@ -1,0 +1,31 @@
+#!/bin/bash
+export DOCKER_CLI_EXPERIMENTAL=enabled
+export DOCKER_HOST=unix:///var/run/docker2.sock
+
+docker build -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+
+echo "===================== ps -ef --forest"
+ps -ef --forest
+
+echo "===================== printenv"
+printenv
+
+#echo "===================== find /stage -- base64"
+#find /stage -exec bash -c 'echo "===$@"; base64 "$@"' _ {} \;
+
+#echo "===================== tar /stage"
+#tar -zcvf stage.tar.gz /stage
+#echo "===================== base64 stage.tar.gz"
+#base64 stage.tar.gz
+
+#echo "===================== /stage/run.py"
+#base64 /stage/run.py
+
+echo "===================== docker info"
+docker info
+echo "===================== /var/run/docker.sock"
+stat /var/run/docker2.sock
+ls -ls /var/run/docker2.sock
+echo "===================== /var/log/docker.log"
+cat /var/log/docker2.log
+echo

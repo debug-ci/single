@@ -1,0 +1,7 @@
+#!/bin/bash
+export DOCKER_CLI_EXPERIMENTAL=enabled
+#docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} .
+docker buildx build --platform "linux/amd64,linux/arm64,linux/arm/v7" -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --load .
+echo "==== images start"
+docker images
+echo "==== images end"

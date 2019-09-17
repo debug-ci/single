@@ -1,0 +1,24 @@
+#!/bin/bash
+export DOCKER_CLI_EXPERIMENTAL=enabled
+
+echo "===================== updating things"
+apt-get update -qq
+apt-get install -y $(dpkg -S $(which docker) | cut -d':' -f1) $(dpkg -S $(which docker) | cut -d':' -f1)-cli containerd.io jq
+
+mkdir -p /root/.docker
+ln -s /root/.dockercfg /root/.docker/config.json
+
+echo "===================== docker info"
+docker info
+echo "===================== docker version"
+docker version
+#echo "===================== docker build install"
+#docker buildx install
+
+#echo "===================== dest default platforms"
+#export DOCKER_DEFAULT_PLATFORM="linux/amd64,linux/arm64,linux/arm/v7"
+
+echo "===================== add qemu stuff"
+docker run --rm --privileged multiarch/qemu-user-static:register --reset
+docker run --privileged linuxkit/binfmt:v0.7
+echo
